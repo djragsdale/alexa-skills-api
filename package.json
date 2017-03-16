@@ -1,0 +1,14 @@
+{
+  "name": "RandomMovie",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.2",
+    "openssl-cert-tools": "^1.2.1",
+    "unirest": "^0.5.1"
+  },
+  "engines": {
+    "node": "6.4.0"
+  }
+}
