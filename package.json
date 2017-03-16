@@ -1,5 +1,6 @@
 {
-  "name": "RandomMovie",
+  "name": "alexa-skilla-api",
+  "author": "David Ragsdale",
   "version": "0.0.1",
   "private": true,
   "license": "MIT",
