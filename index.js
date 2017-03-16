@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const tools = require('openssl-cert-tools');
 const isUndefined = require('lodash').isUndefined;
 
-const DEBUG = true;
+const DEBUG = false;
 
 function logDebug(...args) {
 	if (DEBUG) {
