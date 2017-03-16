@@ -7,6 +7,14 @@ const crypto = require('crypto');
 const tools = require('openssl-cert-tools');
 const isUndefined = require('lodash').isUndefined;
 
+const DEBUG = true;
+
+function logDebug(...args) {
+	if (DEBUG) {
+		console.log.apply(null, args);
+	}
+}
+
 function AlexaSkillsApi(skillId, messages, intents) {
 
 	let api = {};
@@ -102,14 +110,14 @@ function AlexaSkillsApi(skillId, messages, intents) {
 									resolve(handleError('Certificate expired.'));
 								}
 
-								console.log('certificate current and from valid location.');
+								logDebug('certificate current and from valid location.');
 
 								let verifier = crypto.createVerify('RSA-SHA1');
-								console.log('verifier created');
+								logDebug('verifier created');
 								verifier.update(req.rawBody);
-								console.log('verifier updated', req.rawBody);
+								logDebug('verifier updated', req.rawBody);
 								let verified = verifier.verify(certification, headers.signature, 'base64');
-								console.log('verifying complete', verified);
+								logDebug('verifying complete', verified);
 								if (!verified) {
 									resolve(handleError('Invalid signature.'));
 								}
@@ -126,7 +134,7 @@ function AlexaSkillsApi(skillId, messages, intents) {
 			});
 
 			return signed.then((valid) => {
-				console.log('signed correctly', valid);
+				logDebug('signed correctly', valid);
 
 				if (!valid) {
 					return valid;
@@ -233,7 +241,7 @@ function AlexaSkillsApi(skillId, messages, intents) {
 							errorHandler(requestBody, res);
 						}
 					} else if (requestType === 'SessionEndedRequest') {
-						console.log('Session ended', requestBody.reason);
+						logDebug('Session ended', requestBody.reason);
 						// res.send(formatResponse(api.messages.endSession.output));
 					}
 				} catch (err) {
