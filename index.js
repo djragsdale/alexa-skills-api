@@ -257,7 +257,7 @@ function SimpleAlexaSkill(skillId, messages, intents) {
 		});
 	};
 
-	return api;
+	return skill;
 }
 
 module.exports = SimpleAlexaSkill;
