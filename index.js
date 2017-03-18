@@ -15,13 +15,13 @@ function logDebug(...args) {
 	}
 }
 
-function AlexaSkillsApi(skillId, messages, intents) {
+function SimpleAlexaSkill(skillId, messages, intents) {
 
-	let api = {};
+	let skill = {};
 
-	api.intents = intents;
-	api.messages = messages;
-	api.skillId = skillId;
+	skill.intents = intents;
+	skill.messages = messages;
+	skill.skillId = skillId;
 
 	function handleError(message, obj) {
 		console.log(`ERROR: ${message}`);
@@ -164,7 +164,7 @@ function AlexaSkillsApi(skillId, messages, intents) {
 					return handleError('Invalid request type.');
 				}
 				// CHeck for valid intents
-				if (body.request.type === 'IntentRequest' && (isUndefined(body.request.intent) || !api.intents[body.request.intent.name])) {
+				if (body.request.type === 'IntentRequest' && (isUndefined(body.request.intent) || !skill.intents[body.request.intent.name])) {
 					return handleError('Invalid intent.');
 				}
 				// Check for applicationId
@@ -175,7 +175,7 @@ function AlexaSkillsApi(skillId, messages, intents) {
 					return handleError('Missing applicationId.');
 				}
 				// Validate applicationId
-				if (body.session.application.applicationId !== api.skillId) {
+				if (body.session.application.applicationId !== skill.skillId) {
 					return handleError('Invalid applicationId.');
 				}
 				// Validate version
@@ -194,7 +194,7 @@ function AlexaSkillsApi(skillId, messages, intents) {
 		}
 	}
 
-	api.formatResponse = function (output, reprompt, endSession) {
+	skill.formatResponse = function (output, reprompt, endSession) {
 
 		let data = {
 			'version': '1.0',
@@ -219,9 +219,9 @@ function AlexaSkillsApi(skillId, messages, intents) {
 		return data;
 	};
 
-	api.handleAll = (method, req, res) => {
+	skill.handleAll = (method, req, res) => {
 		function errorHandler(requestBody, res) {
-			res.send(api.formatResponse(api.messages.error.output, api.messages.error.reprompt));
+			res.send(skill.formatResponse(skill.messages.error.output, skill.messages.error.reprompt));
 		}
 
 		validateRequest(req).then((valid) => {
@@ -232,26 +232,26 @@ function AlexaSkillsApi(skillId, messages, intents) {
 					// Get the request type "request":
 					let requestType = requestBody.request.type;
 					if (requestType === 'LaunchRequest') {
-						res.send(api.formatResponse(api.messages.launch.output));
+						res.send(skill.formatResponse(skill.messages.launch.output));
 					} else if (requestType === 'IntentRequest') {
 						try {
-							api.intents[requestBody.request.intent.name](requestBody, res);
+							skill.intents[requestBody.request.intent.name](requestBody, res);
 						} catch(err) {
 							handleError(`Intent handler for ${requestBody.request.intent.name} failed.`, err);
 							errorHandler(requestBody, res);
 						}
 					} else if (requestType === 'SessionEndedRequest') {
 						logDebug('Session ended', requestBody.reason);
-						// res.send(formatResponse(api.messages.endSession.output));
+						// res.send(formatResponse(skill.messages.endSession.output));
 					}
 				} catch (err) {
-					res.send(api.formatResponse(api.messages.error.output, api.messages.error.reprompt));
+					res.send(skill.formatResponse(skill.messages.error.output, skill.messages.error.reprompt));
 				}
 
 			} else {
 				// For security purposes
 				// return 400 Bad Request
-				// res.send(formatResponse(api.messages.error.output, api.messages.error.reprompt, true));
+				// res.send(formatResponse(skill.messages.error.output, skill.messages.error.reprompt, true));
 				res.status(400).send();
 			}
 		});
@@ -260,4 +260,4 @@ function AlexaSkillsApi(skillId, messages, intents) {
 	return api;
 }
 
-module.exports = AlexaSkillsApi;
+module.exports = SimpleAlexaSkill;

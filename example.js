@@ -26,7 +26,7 @@ const BOOK_LIST = [
 		'author': 'Ralph Ellison'
 	}
 ];
-const AlexaSkillsApi = require('alexa-skills-api');
+const SimpleAlexaSkill = require('simple-alexa-skill');
 
 const messages = {
 	'launch': {
@@ -57,13 +57,13 @@ const intents = {
 	'AMAZON.CancelIntent': cancelIntentHandler
 };
 
-let api = new AlexaSkillsApi(skillId, messages, intents);
+let skill = new SimpleAlexaSkill(skillId, messages, intents);
 
 function getRandomBook(resolve) {
 	const book = BOOK_LIST[Math.floor(Math.random() * BOOK_LIST.length)];
 	let message = `If you're looking for a random book to read, check out ${book.title} by ${book.author}`;
 
-	resolve(api.formatResponse(`${message}! ${api.messages.found.reprompt}`, messages.found.reprompt));
+	resolve(skill.formatResponse(`${message}! ${skill.messages.found.reprompt}`, messages.found.reprompt));
 }
 
 function getRandomBookIntentHandler(requestBody, res) {
@@ -77,17 +77,17 @@ function getRandomBookIntentHandler(requestBody, res) {
 }
 
 function helpIntentHandler(requestBody, res) {
-	res.send(api.formatResponse(api.messages.help.output, api.messages.help.reprompt));
+	res.send(skill.formatResponse(skill.messages.help.output, skill.messages.help.reprompt));
 }
 
 function stopIntentHandler(requestBody, res) {
-	res.send(api.formatResponse(api.messages.stop.output, api.messages.stop.reprompt, true));
+	res.send(skill.formatResponse(skill.messages.stop.output, skill.messages.stop.reprompt, true));
 }
 
 function cancelIntentHandler(requestBody, res) {
-	res.send(api.formatResponse(api.messages.cancel.output, api.messages.cancel.reprompt, true));
+	res.send(skill.formatResponse(skill.messages.cancel.output, skill.messages.cancel.reprompt, true));
 }
 
-router.post('/', (req, res) => api.handleAll('POST', req, res));
+router.post('/', (req, res) => skill.handleAll('POST', req, res));
 
 module.exports = router;

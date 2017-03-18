@@ -1,8 +1,7 @@
 {
-  "name": "alexa-skills-api",
+  "name": "simple-alexa-skill",
   "author": "David Ragsdale",
-  "version": "0.0.3",
-  "private": true,
+  "version": "0.0.1",
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.2",
