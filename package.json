@@ -1,8 +1,21 @@
 {
   "name": "simple-alexa-skill",
-  "author": "David Ragsdale",
   "version": "1.0.0",
+  "description": "A simple way to build Alexa skills with Express",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djragsdale/simple-alexa-skill.git"
+  },
+  "keywords": [
+    "slack"
+  ],
+  "author": "David Ragsdale",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/djragsdale/simple-alexa-skill/issues"
+  },
+  "homepage": "https://github.com/djragsdale/simple-alexa-skill#readme",
   "dependencies": {
     "lodash": "^4.17.2",
     "openssl-cert-tools": "^1.2.1",
