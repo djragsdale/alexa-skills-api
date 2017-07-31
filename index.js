@@ -161,11 +161,11 @@ function SimpleAlexaSkill(skillId, messages, intents) {
 				}
 				// Check for valid request type
 				if (['LaunchRequest', 'IntentRequest', 'SessionEndedRequest'].indexOf(body.request.type) < 0) {
-					return handleError('Invalid request type.');
+					return handleError('Invalid request type.', body.request.type);
 				}
 				// CHeck for valid intents
 				if (body.request.type === 'IntentRequest' && (isUndefined(body.request.intent) || !skill.intents[body.request.intent.name])) {
-					return handleError('Invalid intent.');
+					return handleError('Invalid intent.', body.request.intent);
 				}
 				// Check for applicationId
 				if (isUndefined(body.session)) {
@@ -176,11 +176,11 @@ function SimpleAlexaSkill(skillId, messages, intents) {
 				}
 				// Validate applicationId
 				if (body.session.application.applicationId !== skill.skillId) {
-					return handleError('Invalid applicationId.');
+					return handleError('Invalid applicationId.', body.session.application.applicationId);
 				}
 				// Validate version
 				if (body.version !== '1.0') {
-					return handleError('Invalid version.');
+					return handleError('Invalid version.', body.version);
 				}
 
 				return true;
