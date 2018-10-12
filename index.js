@@ -242,7 +242,7 @@ function SimpleAlexaSkill(skillId, messages, intents) {
 						}
 					} else if (requestType === 'SessionEndedRequest') {
 						logDebug('Session ended', requestBody.reason);
-						// res.send(formatResponse(skill.messages.endSession.output));
+						res.send(formatResponse(skill.messages.endSession.output));
 					}
 				} catch (err) {
 					res.send(skill.formatResponse(skill.messages.error.output, skill.messages.error.reprompt));
