@@ -1,6 +1,7 @@
 {
   "name": "simple-alexa-skill",
-  "version": "1.0.3",
+  "version": "1.0.4",
+  "type": "commonjs",
   "description": "A simple way to build Alexa skills with Express",
   "main": "index.js",
   "repository": {
